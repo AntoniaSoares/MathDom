@@ -1,0 +1,32 @@
+ARQUIVOS PRINCIPAIS MODIFICADOS
+
+1) Tela inicial, login e cadastro
+- frontend/public/index.html
+- frontend/public/styles.css
+- frontend/src/game/main.js
+
+2) Temas, imagem de fundo e logo
+- frontend/public/styles.css
+- frontend/src/config/gameConfig.js
+
+IMAGENS QUE VOCÊ DEVE ADICIONAR NA PASTA:
+- frontend/public/assets/images/logo-mathdom.png
+- frontend/public/assets/images/bg-inicial-temas.png
+- frontend/public/assets/images/bg-pokemon.png
+- frontend/public/assets/images/bg-mario.png
+- frontend/public/assets/images/bg-biblioteca.png
+
+3) Quantidade de peças por nível e lógica do jogo
+- frontend/src/game/utils/mathLogic.js
+- frontend/src/game/scenes/GameScene.js
+- frontend/src/game/components/Board.js
+- frontend/src/game/components/DominoPiece.js
+
+4) Histórico e correção do erro do Firebase
+- frontend/src/services/api.js
+- frontend/src/game/scenes/HistoryScene.js
+
+OBSERVAÇÃO IMPORTANTE SOBRE O HISTÓRICO
+- O erro do console mostrava que a consulta exigia índice no Firestore.
+- Nesta versão, a busca do histórico foi alterada para não depender desse índice.
+- Se ainda quiser ordenar direto no Firebase no futuro, será necessário criar o índice no painel do Firestore.

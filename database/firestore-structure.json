@@ -1,0 +1,21 @@
+{
+  "usuarios": {
+    "id": "string",
+    "nome": "string",
+    "email": "string",
+    "configuracoes": {
+      "fonte": "string",
+      "contraste": "boolean",
+      "som": "boolean"
+    }
+  },
+  "historico": {
+    "userId": "string",
+    "pontuacao": "number",
+    "acertos": "number",
+    "erros": "number",
+    "tempo": "number",
+    "nivel": "string",
+    "data": "timestamp"
+  }
+}

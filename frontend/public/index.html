@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MathDom</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="default-bg">
+  <div id="appAnnouncer" class="sr-only" aria-live="polite"></div>
+
+  <div id="loginScreen" class="screen auth-screen">
+    <div class="card auth-card">
+      <div class="brand-header">
+        <span class="brand-badge">Versão final para aplicação piloto</span>
+        <img id="gameLogo" class="game-logo" src="./assets/images/logo-mathdom.png" alt="Logo do jogo MathDom">
+        <h1>MathDom</h1>
+        <p class="subtitle">Jogo de matemática em formato de dominó para aplicação com educandos com TEA.</p>
+      </div>
+
+      <div class="auth-center-wrap">
+        <section class="auth-panel auth-panel-single" id="loginPanel">
+          <h2>Entrar</h2>
+          <p class="theme-caption">Acesse o jogo para iniciar uma nova sessão de aprendizagem.</p>
+          <div class="login-form">
+            <input id="email" type="email" placeholder="Email" autocomplete="email">
+            <input id="senha" type="password" placeholder="Senha" autocomplete="current-password">
+            <button onclick="login()">Entrar</button>
+            <button class="secondary-button" type="button" onclick="toggleCadastro(true)">Cadastrar novo usuário</button>
+          </div>
+        </section>
+
+        <section class="auth-panel auth-panel-single hidden" id="registerPanel">
+          <h2>Criar cadastro</h2>
+          <p class="theme-caption">Crie o perfil do jogador para salvar acessibilidade, partidas e histórico.</p>
+          <div class="login-form">
+            <input id="cadastroNome" type="text" placeholder="Nome do jogador" autocomplete="name">
+            <input id="cadastroEmail" type="email" placeholder="Email" autocomplete="email">
+            <input id="cadastroSenha" type="password" placeholder="Senha" autocomplete="new-password">
+            <button onclick="cadastrar()">Cadastrar</button>
+            <button class="secondary-button" type="button" onclick="toggleCadastro(false)">Voltar para login</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="landing-highlights">
+        <div class="mini-info-card">
+          <strong>3 níveis reais</strong>
+          <span>10, 19 e 28 peças</span>
+        </div>
+        <div class="mini-info-card">
+          <strong>Acessibilidade</strong>
+          <span>contraste, fonte, modo simplificado e som</span>
+        </div>
+        <div class="mini-info-card">
+          <strong>Histórico</strong>
+          <span>tabela, indicadores e gráficos</span>
+        </div>
+      </div>
+
+      <div id="authMessage" class="feedback-box auth-message"></div>
+    </div>
+  </div>
+
+  <div id="menuScreen" class="screen menu-screen" style="display:none;">
+    <div class="card menu-card">
+      <div class="menu-topbar">
+        <div>
+          <span class="brand-badge">Ambiente de aplicação</span>
+          <h2>Menu principal</h2>
+          <p id="welcomeText">Bem-vinda!</p>
+        </div>
+        <button class="secondary-button" onclick="logout()">Sair</button>
+      </div>
+
+      <div class="menu-grid final-menu-grid">
+        <section class="menu-section hero-menu-panel">
+          <div class="hero-menu-copy">
+            <h3>Preparar sessão de jogo</h3>
+            <p class="helper-text">Escolha o nível, o tema visual e organize a experiência antes da aplicação com os participantes.</p>
+          </div>
+
+          <div class="menu-controls vertical-controls">
+            <label>
+              <span>Nível</span>
+              <select id="nivel">
+                <option value="facil">Fácil</option>
+                <option value="medio">Médio</option>
+                <option value="dificil">Difícil</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Tema</span>
+              <select id="tema">
+                <option value="pokemon">Pokémon</option>
+                <option value="mario">Mario</option>
+                <option value="biblioteca">Biblioteca</option>
+              </select>
+            </label>
+
+            <div class="theme-preview-card theme-showcase">
+              <div>
+                <strong>Visual selecionado</strong>
+                <p id="themeDescription" class="theme-caption">Pokémon: visual azul e dinâmico para uma experiência leve e divertida.</p>
+              </div>
+              <div class="theme-pills">
+                <span class="theme-pill">Tema ativo</span>
+                <span id="pieceCountHint" class="theme-pill">10 peças</span>
+              </div>
+            </div>
+
+            <div class="menu-controls actions-row centered-actions">
+              <button onclick="iniciar()">Iniciar jogo</button>
+              <button class="secondary-button" onclick="abrirHistorico()">Ver histórico</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="menu-section accessibility-section">
+          <h3>Acessibilidade</h3>
+          <div class="accessibility-panel">
+            <button onclick="aumentarTexto()">A+</button>
+            <button onclick="diminuirTexto()">A-</button>
+            <button onclick="toggleContraste()">Alto contraste</button>
+            <button onclick="toggleSimplificado()">Modo simplificado</button>
+            <button onclick="toggleSom()">Som</button>
+          </div>
+          <p class="helper-text">As preferências ficam salvas por usuário. Os sons do jogo usam tons curtos e suaves, pensados para reduzir sobrecarga sensorial.</p>
+        </section>
+
+        <section class="menu-section info-section">
+          <div class="info-section-header">
+            <h3>Ajuda e sobre</h3>
+            <p class="helper-text">Consulte orientações rápidas para aplicação e uma descrição do produto.</p>
+          </div>
+          <div class="info-action-grid">
+            <button type="button" class="secondary-button info-button" onclick="abrirAjuda()">Ajuda rápida</button>
+            <button type="button" class="secondary-button info-button" onclick="abrirSobre()">Sobre o produto</button>
+          </div>
+          <div class="about-preview-grid">
+            <div class="mini-info-card">
+              <strong>Objetivo</strong>
+              <span>apoiar o ensino de adição e subtração com estrutura visual e previsível</span>
+            </div>
+            <div class="mini-info-card">
+              <strong>Público</strong>
+              <span>educandos com TEA em contexto pedagógico mediado</span>
+            </div>
+            <div class="mini-info-card">
+              <strong>Registro</strong>
+              <span>partidas salvas com indicadores para análise posterior</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="gameScreen" class="screen" style="display:none;">
+    <div class="card game-header-card">
+      <div id="game"></div>
+    </div>
+  </div>
+
+  <div id="historyScreen" class="screen" style="display:none;">
+    <div class="card history-card">
+      <div class="history-heading">
+        <div>
+          <span class="brand-badge">Acompanhamento de desempenho</span>
+          <h2>Histórico</h2>
+        </div>
+      </div>
+      <div id="historico"></div>
+      <div id="historySummaryCards" class="summary-cards"></div>
+
+      <div id="historyExportArea">
+        <div class="history-grid">
+          <div class="history-table-card">
+            <h3>Tabela de partidas</h3>
+            <div id="historyTableWrapper" class="history-table-wrapper"></div>
+          </div>
+
+          <div class="history-charts-card">
+            <div class="chart-card">
+              <h4>Evolução de acertos e erros</h4>
+              <canvas id="grafico1"></canvas>
+            </div>
+            <div class="chart-card">
+              <h4>Pontuação por partida</h4>
+              <canvas id="grafico2"></canvas>
+            </div>
+            <div class="chart-card">
+              <h4>Tempo por partida</h4>
+              <canvas id="grafico3"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="history-actions">
+        <button onclick="gerarPDF()">Baixar PDF</button>
+        <button class="secondary-button" onclick="voltarMenu()">Voltar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="infoModal" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-card modal-card-wide">
+      <div class="modal-header-row">
+        <div>
+          <span id="infoModalTag" class="brand-badge">Informações</span>
+          <h3 id="infoModalTitle">Ajuda</h3>
+        </div>
+        <button type="button" class="secondary-button modal-close-button" onclick="fecharInfoModal()">Fechar</button>
+      </div>
+      <div id="infoModalContent" class="info-modal-content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="../src/game/main.js"></script>
+</body>
+</html>
